@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar style="background: #0D47A1; color: white;">
+    <ion-title class="ion-text-center">
+      🧾 Formulir Pembelian
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #f2f4f8;">
+
+  <ion-card style="background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+    <ion-card-header>
+      <ion-card-title style="font-weight: 600; text-align: center; color: #1565C0;">
+        📋 Input Pembelian Produk
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form (ngSubmit)="submitPembelian()" #formPembelian="ngForm">
+
+        <!-- Kode Pembelian -->
+        <ion-item lines="inset">
+          <ion-label position="stacked">Kode Pembelian</ion-label>
+          <ion-input [value]="kode_pembelian" readonly></ion-input>
+        </ion-item>
+
+        <!-- Tanggal -->
+        <ion-item lines="inset">
+          <ion-label position="stacked">Tanggal Pembelian</ion-label>
+          <ion-datetime presentation="date" [(ngModel)]="tanggal" name="tanggal" required
+            #tanggalCtrl="ngModel"></ion-datetime>
+        </ion-item>
+        <ion-note color="danger" *ngIf="tanggalCtrl.invalid && tanggalCtrl.touched">Wajib pilih tanggal</ion-note>
+
+        <!-- Nama Produk -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Nama Produk</ion-label>
+          <ion-input [(ngModel)]="nama_produk" name="nama_produk" required #namaCtrl="ngModel"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="namaCtrl.invalid && namaCtrl.touched">Wajib diisi</ion-note>
+
+        <!-- Kode Produk -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Kode Produk</ion-label>
+          <ion-input [(ngModel)]="kode_produk" name="kode_produk" required #kodeCtrl="ngModel"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="kodeCtrl.invalid && kodeCtrl.touched">Wajib diisi</ion-note>
+
+        <!-- Harga Beli -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Harga Beli</ion-label>
+          <ion-input type="number" [(ngModel)]="harga_beli" name="harga_beli" required min="1"
+            (ionInput)="hitungTotalHarga()" #hargaCtrl="ngModel"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="hargaCtrl.invalid && hargaCtrl.touched">Harus lebih dari 0</ion-note>
+
+        <!-- Jumlah -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Jumlah</ion-label>
+          <ion-input type="number" [(ngModel)]="jumlah" name="jumlah" required min="1" (ionInput)="hitungTotalHarga()"
+            #jumlahCtrl="ngModel"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="jumlahCtrl.invalid && jumlahCtrl.touched">Minimal 1</ion-note>
+
+        <!-- Total Harga -->
+        <ion-item lines="inset">
+          <ion-label position="stacked">Total Harga</ion-label>
+          <ion-input [value]="total_harga | number:'1.0-0'" readonly></ion-input>
+        </ion-item>
+
+        <!-- Metode Pembayaran -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Metode Pembayaran</ion-label>
+          <ion-select [(ngModel)]="metode_pembayaran" name="metode_pembayaran" required #metodeCtrl="ngModel">
+            <ion-select-option value="Tunai">Tunai</ion-select-option>
+            <ion-select-option value="Transfer Bank">Transfer Bank</ion-select-option>
+            <ion-select-option value="E-Wallet">E-Wallet</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-note color="danger" *ngIf="metodeCtrl.invalid && metodeCtrl.touched">Pilih metode</ion-note>
+
+        <!-- Keterangan -->
+        <ion-item lines="inset">
+          <ion-label position="floating">Keterangan (opsional)</ion-label>
+          <ion-textarea [(ngModel)]="keterangan" name="keterangan"></ion-textarea>
+        </ion-item>
+
+        <!-- Tombol Simpan -->
+        <ion-button type="submit" expand="block" color="primary" class="ion-margin-top" [disabled]="formPembelian.invalid">
+          💾 Simpan Pembelian
+        </ion-button>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

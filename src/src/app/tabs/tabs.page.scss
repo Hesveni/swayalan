@@ -1,0 +1,25 @@
+.custom-tab-bar {
+    --background: #1976D2;
+    /* Biru profesional */
+    --color: white;
+    --color-selected: #FFEB3B;
+    /* Kuning saat aktif */
+    --transition: all 0.3s ease-in-out;
+
+    ion-tab-button {
+        transition: transform 0.2s ease;
+    }
+
+    ion-tab-button.ion-selected {
+        transform: scale(1.1);
+        font-weight: bold;
+    }
+
+    ion-icon {
+        font-size: 20px;
+    }
+
+    ion-label {
+        font-size: 13px;
+    }
+}

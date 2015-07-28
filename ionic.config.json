@@ -1,0 +1,7 @@
+{
+  "name": "Swalayan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">🔐 Admin Panel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="--background: #E3F2FD;">
+
+  <!-- FORM LOGIN -->
+  <div *ngIf="tabState === 'login'" class="ion-text-center">
+    <h3 class="ion-margin-bottom" style="color: #1976D2;">🔐 Silakan Login</h3>
+
+    <ion-card class="login-card" style="max-width: 350px; margin: 0 auto;">
+      <ion-card-content>
+        <ion-item lines="inset">
+          <ion-label position="floating" style="font-size: 14px;">Username</ion-label>
+          <ion-input [(ngModel)]="username" name="username" required></ion-input>
+        </ion-item>
+
+        <ion-item lines="inset">
+          <ion-label position="floating" style="font-size: 14px;">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" size="small" color="primary" class="ion-margin-top" (click)="login()">
+          🔓 Login
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+  <!-- KONTEN ADMIN -->
+  <div *ngIf="tabState === 'admin'">
+    <h2 class="ion-text-center ion-margin-bottom" style="color: #1565C0;">👋 Selamat datang, Admin!</h2>
+
+    <!-- Form Tambah Produk -->
+    <ion-card class="form-card"
+      style="background: #ffffff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
+      <ion-card-header>
+        <ion-card-title style="color: #1976D2;">➕ Tambah Stok Produk</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Nama Produk</ion-label>
+          <ion-input [(ngModel)]="namaProduk" name="namaProduk" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Kode Produk</ion-label>
+          <ion-input [(ngModel)]="kodeProduk" name="kodeProduk" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Harga</ion-label>
+          <ion-input type="number" [(ngModel)]="harga" name="harga" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Kategori</ion-label>
+          <ion-select [(ngModel)]="kategori" name="kategori" placeholder="Pilih kategori" required>
+            <ion-select-option value="Makanan">Makanan</ion-select-option>
+            <ion-select-option value="Minuman">Minuman</ion-select-option>
+            <ion-select-option value="Kebutuhan Rumah Tangga">Kebutuhan Rumah Tangga</ion-select-option>
+            <ion-select-option value="Pembersih">Pembersih</ion-select-option>
+            <ion-select-option value="Alat Tulis">Alat Tulis</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Stock</ion-label>
+          <ion-input type="number" [(ngModel)]="stock" name="stock" required></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>Gambar Produk</ion-label>
+          <input type="file" (change)="onFileSelected($event)" />
+        </ion-item>
+
+        <ion-button expand="block" color="primary" class="ion-margin-top" (click)="tambahProduk()">
+          💾 Simpan Produk
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Data Penjualan -->
+    <h2 class="ion-text-center ion-margin-top" style="color: #0D47A1;">📖 Data Pembelian</h2>
+
+    <ion-list *ngIf="daftarpembelian.length > 0; else tidakAdaPembelian">
+      <ion-card *ngFor="let p of daftarpembelian" class="data-card"
+        style="background-color: #FFFFFF; border-radius: 10px; margin-bottom: 10px;">
+        <ion-card-content>
+          <h3 class="data-nama" style="color: #1565C0;">🧾 {{ p.kode_pembelian }}</h3>
+          <p><strong>📆 Tanggal:</strong> {{ p.tanggal }}</p>
+          <p><strong>📦 Nama Produk:</strong> {{ p.nama_produk }}</p>
+          <p><strong>🔢 Kode Produk:</strong> {{ p.kode_produk }}</p>
+          <p><strong>💰 Harga Beli:</strong> Rp {{ p.harga_beli | number:'1.0-0' }}</p>
+          <p><strong>🔄 Jumlah:</strong> {{ p.jumlah }}</p>
+          <p><strong>💳 Total Harga:</strong> Rp {{ p.total_harga | number:'1.0-0' }}</p>
+          <p><strong>💸 Metode Pembayaran:</strong> {{ p.metode_pembayaran }}</p>
+          <p><strong>📝 Keterangan:</strong> {{ p.keterangan }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+
+    <ng-template #tidakAdaPembelian>
+      <ion-text color="medium">
+        <p class="ion-text-center">Belum ada data pembelian.</p>
+      </ion-text>
+    </ng-template>
+
+    <!-- Tombol Logout -->
+    <ion-button color="danger" expand="full" class="ion-margin-top" (click)="logout()">
+      🚪 Logout
+    </ion-button>
+  </div>
+
+</ion-content>
